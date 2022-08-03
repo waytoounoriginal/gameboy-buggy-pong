@@ -28,6 +28,11 @@
 static const unsigned char clear_map[] = 
 {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+inline void clearBKG(uint8_t x, uint8_t y)
+{
+    set_bkg_tiles(x, y, 20, 18, clearBKGTiles);
+}
+
 
 // Clears a portion of the score in case it gets bugged.
 

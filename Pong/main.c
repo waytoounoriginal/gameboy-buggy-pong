@@ -9,6 +9,9 @@
 #include "utils/tools.c"
 #include "utils/Sound/sound.c"
 
+#include "Sprites/ScreenTitle.c"
+#include "Sprites/ScreenTitleMap.c"
+
 
 
 //  Defining the tiles
@@ -20,6 +23,10 @@ const uint8_t ball = 3;
 
 /////////////////////////////////
 
+UBYTE gamePaused = 1;
+
+////////////////////////////////
+
 Character player, AI;
 
 
@@ -28,7 +35,7 @@ uint8 xBall = MIDX, yBall = MIDY;
 
 int8_t speed_y, speed_x;
 
-uint8_t AICentre;
+uint8_t AICentre, ballCentre;
 
 UBYTE canAImove = 0;
 
@@ -39,15 +46,17 @@ UBYTE ball_alive;
 
 /////////////////////////////////
 
-void moveCharacter(Character* charac, uint8 x, uint8 y)
+void flashy_start(uint8_t frames)
 {
-    move_sprite(charac->spriteids[0], x, y);
-    move_sprite(charac->spriteids[1], x, y + SPRITE_HEIGHT);
-    move_sprite(charac->spriteids[2], x, y + 2 * SPRITE_HEIGHT);
+    for(uint8_t i = 0; i < frames; ++i)
+    {
+        set_bkg_tiles(5, 12, 11, 1, pressStartMap);
+        performanceDelay(3);
+        set_bkg_tiles(5, 12, 11, 1, clear_map);
+        performanceDelay(3);
+    }
+
 }
-
-
-//  Init functions      ///////////////////////////////////////////////////////////////////////
 
 void init_min_font()
 {
@@ -60,9 +69,75 @@ void init_min_font()
 
     font_set(min_font);
 
+    // make_show_win_map(AI_TILE_LOCATION, 1, 1, "0");
+
+    // make_show_win_map(PLAYER_TILE_LOCATION, 1, 1, "0");
+
+    //  move_win(0, 40);
+}
+
+
+
+
+void init_map()
+{
+
+
+    get_bkg_data(0, 14, TileLabel);   //  Ignores the 'air' tile
+    set_bkg_data(MAP_START, 14, TileLabel);
+    set_bkg_tiles(3, 0, 20, 18, screenTitleMap);
+
+    set_bkg_tiles(5, 12, 11, 1, pressStartMap);
+
+    SHOW_BKG;
+
+    
+
+
+
+}
+
+
+void start_game()
+{
+    DISPLAY_ON;
+
+    init_min_font();
+    sound_init();
+
+    init_map();
+
+    waitpad(J_START);
+
+    flashy_start(5);
+    gamePaused = 0;
+
+    HIDE_BKG;
+    //  clearBKG(0, 18);
+
+}
+
+
+
+///////////////////////////////////
+
+void moveCharacter(Character* charac, uint8 x, uint8 y)
+{
+    move_sprite(charac->spriteids[0], x, y);
+    move_sprite(charac->spriteids[1], x, y + SPRITE_HEIGHT);
+    move_sprite(charac->spriteids[2], x, y + 2 * SPRITE_HEIGHT);
+}
+
+
+//  Init functions      ///////////////////////////////////////////////////////////////////////
+
+void init_score()
+{
     make_show_win_map(AI_TILE_LOCATION, 1, 1, "0");
 
     make_show_win_map(PLAYER_TILE_LOCATION, 1, 1, "0");
+
+    SHOW_WIN;
 }
 
 
@@ -126,6 +201,8 @@ void init_ball()
     xBall = MIDX;
     yBall = MIDY + SPRITE_HEIGHT;
 
+    ballCentre = yBall + 4;
+
     //  The initial Y speed
     speed_y = 3;
     speed_x = 1;
@@ -176,6 +253,8 @@ inline UBYTE collision(Character* character)
     )
     {
         fix_collision(character);
+
+
         return 1;
     }
 
@@ -210,11 +289,13 @@ void movement()
 void ai_movement(uint8_t offset, uint8_t speed)
 {
 
-    if(AICentre + offset < yBall)
+
+
+    if(AICentre + offset < ballCentre)
     {
         AI.y += speed;
     }
-    else if(AICentre + offset > yBall)
+    else if(AICentre - offset > ballCentre)
     {
         AI.y -= speed;
     }
@@ -249,8 +330,12 @@ inline void respawn_ball()
     xBall = MIDX;
     yBall = MIDY + SPRITE_HEIGHT;
 
+    ballCentre = yBall + 4;
+
     speed_y = (rand() % 10 - 5);
     speed_x = 1;
+
+    canAImove = 0;
 
     set_sprite_tile(BALL_SPRITE, ball);
 
@@ -265,6 +350,8 @@ void ball_movement()
 
     if(collisioned)
     {
+        
+        
         speed_y = (rand() % 10 - 5) * -1;
         if((speed_x > -4 && speed_x < 0) || (speed_x < 4 && speed_x > 0))
         {
@@ -295,6 +382,7 @@ void ball_movement()
     {
         AI.score++;
         update_score(AI.score, AI_TILE_LOCATION);
+        play_score();
 
         kill_ball();
 
@@ -304,6 +392,7 @@ void ball_movement()
     {
         player.score++;
         update_score(player.score, PLAYER_TILE_LOCATION);
+        play_score();
 
         kill_ball();
 
@@ -312,6 +401,7 @@ void ball_movement()
 
     xBall += speed_x;
     yBall += speed_y;
+    ballCentre = yBall + 4;
 
     move_sprite(BALL_SPRITE, xBall, yBall);
     wait_vbl_done();
@@ -321,8 +411,10 @@ void ball_movement()
 void main()
 {
 
-    init_min_font();
-    sound_init();
+    start_game();
+    //  init_min_font();
+
+    init_score();
 
     set_sprite_data(0, 4, character);
 
@@ -332,8 +424,8 @@ void main()
 
 
     SHOW_SPRITES;
-    SHOW_WIN;
-    DISPLAY_ON;
+    //  SHOW_WIN;
+    SHOW_BKG;
 
     waitpad(J_START);
     randomSeed();
@@ -359,7 +451,7 @@ void main()
 
         if(ball_alive && canAImove)
         {
-            ai_movement(2, 4);
+            ai_movement(0, 4);
         }
         
         // if(joy && J_A)

@@ -20,68 +20,85 @@ Symbol Table
     _NR50_REG                                                      ****** GX
     _NR51_REG                                                      ****** GX
     _NR52_REG                                                      ****** GX
-  0 ___str_2                                                       0002FA R
-  0 ___str_4                                                       000314 R
-  0 ___str_5                                                       0003FB R
+  0 _TileLabel                                                     0003C1 GR
+  0 ___str_2                                                       000305 R
+  0 ___str_4                                                       00031F R
+  0 ___str_5                                                       0005C5 R
     __divuint                                                      ****** GX
     __modsint                                                      ****** GX
     __moduint                                                      ****** GX
     __mulint                                                       ****** GX
-  7 __xinit__canAImove                                             000004 R
-  7 __xinit__timer                                                 000005 R
-  7 __xinit__xBall                                                 000000 R
-  7 __xinit__yBall                                                 000002 R
-  0 _ai_movement                                                   0005FB GR
-  0 _ball                                                          0003C5 GR
-  1 _ball_alive                                                    00001F GR
-  0 _ball_movement                                                 000670 GR
-  2 _canAImove                                                     000004 GR
+  7 __xinit__canAImove                                             0002D5 R
+  7 __xinit__clearBKGTiles                                         000000 R
+  7 __xinit__gamePaused                                            0002D0 R
+  7 __xinit__screenTitleMap                                        000168 R
+  7 __xinit__timer                                                 0002D6 R
+  7 __xinit__xBall                                                 0002D1 R
+  7 __xinit__yBall                                                 0002D3 R
+  0 _ai_movement                                                   0007CA GR
+  0 _ball                                                          0004A4 GR
+  1 _ballCentre                                                    00001F GR
+  1 _ball_alive                                                    000020 GR
+  0 _ball_movement                                                 000893 GR
+  2 _canAImove                                                     0002D5 GR
   0 _character                                                     00008F GR
-  0 _clear_map                                                     0000CF R
+  2 _clearBKGTiles                                                 000000 GR
+  0 _clear_map                                                     0000DA R
+  0 _flashy_start                                                  000369 GR
     _font_init                                                     ****** GX
     _font_load                                                     ****** GX
     _font_min                                                      ****** GX
     _font_set                                                      ****** GX
     _free                                                          ****** GX
-  0 _initGame                                                      0002C8 GR
-  0 _init_AI                                                       00050E GR
-  0 _init_ball                                                     000580 GR
-  0 _init_min_font                                                 0003C6 GR
-  0 _init_player                                                   0004B2 GR
-    _initrand                                                      ****** GX
-    _joypad                                                        ****** GX
-  0 _low                                                           0003C4 GR
-  0 _main                                                          000AD4 GR
-  0 _make_show_win_map                                             0000E2 GR
-    _malloc                                                        ****** GX
-  0 _mid                                                           0003C3 GR
-  0 _moveCharacter                                                 000349 GR
-  0 _movement                                                      0005B6 GR
-  0 _play_jumpy_sound                                              000334 GR
+  2 _gamePaused                                                    0002D0 GR
+    _get_bkg_data                                                  ****** GX
+  0 _initGame                                                      0002D3 GR
+  0 _init_AI                                                       0006D8 GR
+  0 _init_ball                                                     00074A GR
+  0 _init_map                                                      0004B6 GR
+  0 _init_min_font                                                 0004A5 GR
+  0 _init_player                                                   00067C GR
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy Z80-like CPU), page 2.
 Hexadecimal [24-Bits]
 
 Symbol Table
 
+  0 _init_score                                                    00059A GR
+    _initrand                                                      ****** GX
+    _joypad                                                        ****** GX
+  0 _low                                                           0004A3 GR
+  0 _main                                                          000D03 GR
+  0 _make_show_win_map                                             0000ED GR
+    _malloc                                                        ****** GX
+  0 _mid                                                           0004A2 GR
+  0 _moveCharacter                                                 000521 GR
+  0 _movement                                                      000785 GR
+  0 _play_jumpy_sound                                              00033F GR
+  0 _play_score                                                    000354 GR
   1 _player                                                        000000 GR
+  0 _pressStartMap                                                 0000CF GR
     _puts                                                          ****** GX
     _rand                                                          ****** GX
+  2 _screenTitleMap                                                000168 GR
+    _set_bkg_data                                                  ****** GX
+    _set_bkg_tiles                                                 ****** GX
     _set_sprite_data                                               ****** GX
     _set_win_tiles                                                 ****** GX
     _shadow_OAM                                                    ****** GX
-  0 _sound_init                                                    000327 GR
+  0 _sound_init                                                    000332 GR
   1 _speed_x                                                       00001D GR
   1 _speed_y                                                       00001C GR
+  0 _start_game                                                    0004F6 GR
     _strlen                                                        ****** GX
-  2 _timer                                                         000005 GR
+  2 _timer                                                         0002D6 GR
   0 _toString                                                      000000 GR
-  0 _toString_digits_65536_151                                     0000D7 R
-  0 _top                                                           0003C2 GR
-  0 _update_score                                                  0003FD GR
+  0 _toString_digits_65536_153                                     0000E2 R
+  0 _top                                                           0004A1 GR
+  0 _update_score                                                  0005C7 GR
     _wait_vbl_done                                                 ****** GX
     _waitpad                                                       ****** GX
-  2 _xBall                                                         000000 GR
-  2 _yBall                                                         000002 GR
+  2 _xBall                                                         0002D1 GR
+  2 _yBall                                                         0002D3 GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy Z80-like CPU), page 3.
@@ -89,13 +106,13 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    BB2   flags    0
-   1 _DATA                                      size     20   flags    0
-   2 _INITIALIZED                               size      6   flags    0
+   0 _CODE                                      size    DE5   flags    0
+   1 _DATA                                      size     21   flags    0
+   2 _INITIALIZED                               size    2D7   flags    0
    3 _DABS                                      size      0   flags    8
    4 _HOME                                      size      0   flags    0
    5 _GSINIT                                    size      0   flags    0
    6 _GSFINAL                                   size      0   flags    0
-   7 _INITIALIZER                               size      6   flags    0
+   7 _INITIALIZER                               size    2D7   flags    0
    8 _CABS                                      size      0   flags    8
 
